@@ -1,4 +1,4 @@
-# authentication_presentation
+# Authentication Presentation
 
 A presenation about authentication in Alfresco.
-Some general stuff (cryptography concepts, protocols like kerberos, cas, ldap bond, ntlm) et some alfresco specific (config, debugging)
+Some general stuff (cryptography concepts, protocols like kerberos, cas, ldap bind, ntlm) et some Alfresco specific (config, debugging)
