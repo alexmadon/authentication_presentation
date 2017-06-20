@@ -1,0 +1,3710 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Authentication and Filesystems</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
+<!-- metadata -->
+<meta name="generator" content="S5" />
+<meta name="version" content="S5 1.1" />
+<meta name="presdate" content="20050728" />
+<meta name="author" content="Eric A. Meyer" />
+<meta name="company" content="Complex Spiral Consulting" />
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<link rel="stylesheet" href="ui/default/slides.css" type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css" type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css" type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css" type="text/css" media="projection" id="operaFix" />
+<!-- S5 JS -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+</head>
+<body>
+
+
+
+
+
+
+
+<div class="layout">
+<div id="controls"><!-- DO NOT EDIT --></div>
+<div id="currentSlide"><!-- DO NOT EDIT --></div>
+<div id="header"></div>
+<div id="footer"><h1>[Maidenhead 2013-03-11]</h1><h2>Authentication and Filesystems</h2></div>
+</div>
+
+
+
+
+
+
+
+<div class="presentation">
+
+
+
+
+
+<div class="slide">
+<h1>Authentication and Filesystems</h1>
+<h1>Round The Table</h1>
+<h3>Alex Madon</h3>
+<h4>Alfresco</h4>
+<div class="handout">
+Plan:
+<ul>
+</ul>
+</div>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Plan</h1>
+<ul>
+<li>Authentication: protocols</li>
+<li>Authentication: Alfresco</li>
+<li>Filesystems: protocols</li>
+<li>Filesystems: Alfresco</li>
+<li>Subjects</li>
+<li>Labs</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Authentication</h1>
+<ul>
+<li>what is authentication?</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Authentication</h1>
+<ul>
+<li>who?</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication</h1>
+<ul>
+<li>First stage to use a system</li>
+<li>Sev1
+</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication: Authorization</h1>
+<ul>
+<li>different</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: User Creation</h1>
+<ul>
+<li>alfresco repo</li>
+<li>when?</li>
+<pre>
+synchronization.autoCreatePeopleOnLogin=false
+synchronization.syncWhenMissingPeopleLogIn=true
+</pre>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: pluggable</h1>
+<ul>
+<li>subsystems</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: pluggable: list</h1>
+<ul>
+<li>alfrescoNtlm</li>
+<li>passthru</li>
+<li>ldap</li>
+<li>ldap-ad</li>
+<li>kerberos</li>
+<li>external</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Plan</h1>
+<ul>
+<li>Protocol Generalities</li>
+<li>Alfresco Specifics</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication: security</h1>
+<ul>
+<li>secure/not secure</li>
+<li>security</li>
+<li>cryptography</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: But Before</h1>
+<ul>
+<li>Cryptography</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: 3 types</h1>
+<ul>
+<li><b>Encryption/Decryption</b>
+<ul>
+<li>conventionnal</li>
+<li>public key</li>
+</ul>
+</li>
+<li><b>hash</b></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: blocks</h1>
+<ul>
+<li>building blocks</li>
+<li>combination</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Encryption and decryption</h1>
+<ul>
+<li>plaintext or cleartext</li>
+<li>disguising plaintext=encryption</li>
+<li>ciphertext</li>
+<li>reverting ciphertext=decryption</li>
+</ul>
+
+<div class="handout">
+Data that can be read and understood without any special measures is called plaintext
+or cleartext. The method of disguising plaintext in such a way as to hide its substance
+is called encryption. Encrypting plaintext results in unreadable gibberish called
+ciphertext. You use encryption to make sure that information is hidden from anyone
+for whom it is not intended, even those who can see the encrypted data. The process
+of reverting ciphertext to its original plaintext is called decryption.
+The following figure shows this process.
+</div>
+</div>
+
+<div class="slide">
+<h1>Cryptography: Encryption and decryption</h1>
+<center><img src="pics/encryption_decryption2.png" width="80%"/></center>
+</div>
+
+<div class="slide">
+<h1>Cryptography: What is cryptography?</h1>
+
+<ul>
+<li>The science of using mathematics to encrypt and decrypt data.</li> 
+
+(not steganography)
+
+<li>Cryptography = <br/>
+κρυπτός, kryptos, "hidden, secret" +  γράφειν, graphein, "writing"</li>
+</ul>
+
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: How does cryptography work?</h1>
+
+
+<ul>
+<li>cryptographic algorithm, or cipher</li>
+<li>a mathematical function used in the encryption and decryption process</li>
+</ul>
+
+<div class="handout">
+
+A cryptographic algorithm, or cipher, is a mathematical function used in the encryption and decryption process. A cryptographic algorithm works in combination with a
+key - a word, number, or phrase - to encrypt the plaintext. The same plaintext
+encrypts to different ciphertext with different keys. The security of encrypted data is
+entirely dependent on two things: the strength of the cryptographic algorithm and the
+secrecy of the key.
+A cryptographic algorithm, plus all possible keys and all the protocols that make it
+work, comprise a cryptosystem.
+
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: Keys</h1>
+
+
+<ul>
+<li>Encrypt with akey</li>
+<li>Key=A word, number, or phrase, etc...</li>
+<li>Different ciphertext => different keys. </li>
+</ul>
+
+<div class="handout">
+
+A cryptographic algorithm, or cipher, is a mathematical function used in the encryption and decryption process. A cryptographic algorithm works in combination with a
+key - a word, number, or phrase - to encrypt the plaintext. The same plaintext
+encrypts to different ciphertext with different keys. The security of encrypted data is
+entirely dependent on two things: the strength of the cryptographic algorithm and the
+secrecy of the key.
+A cryptographic algorithm, plus all possible keys and all the protocols that make it
+work, comprise a cryptosystem.
+
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Strong cryptography</h1>
+
+<ul>
+<li>Cryptographic strength measured by:</li>
+<ul>
+<li>Time and Resources it would require to recover the plaintext.</li>
+</ul>
+
+<li>Strong: is not possible to decipher </li>
+<ul>
+<li>before the end of the universe</li>
+<li>with all the planet computers</li>
+</ul>
+</ul>
+
+
+<div class="handout">
+
+
+"There are two kinds of cryptography in this world: cryptography that will stop your
+kid sister from reading your files, and cryptography that will stop major governments
+from reading your files. This book is about the latter."
+<i>Bruce Schneier, Applied Cryptography: Protocols, Algorithms, and Source Code in C</i>
+
+
+<br/>
+
+Cryptography can be strong or weak, as explained above. Cryptographic strength is
+measured in the time and resources it would require to recover the plaintext. The
+result of strong cryptography is ciphertext that is very difficult to decipher without
+possession of the appropriate decoding tool. How difficult? Given all of today's computing power and available time—even a billion computers doing a billion checks a
+second—it is not possible to decipher the result of strong cryptography before the end
+of the universe.
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: But more than Cryptography strength</h1>
+
+
+<ul>
+<li>the strength of the cryptographic algorithm</li>
+<li>the secrecy of the key</li>
+</ul>
+
+<div class="handout">
+
+The security of encrypted data is
+entirely dependent on two things: the strength of the cryptographic algorithm and the
+secrecy of the key.
+</div>
+
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: aging</h1>
+<ul>
+<li>aging</li>
+<li>secure becomes insecure (dead)</li>
+</ul>
+</div>
+
+
+<!-- ========================conventionnal and public ========= -->
+
+
+
+
+<!-- ========================= symmetric/public ======= -->
+
+
+
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Encryption/Decryption: Two types</h1>
+<ul>
+<li>Conventional cryptography</li>
+<li>Public key cryptography</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Conventional: Names</h1>
+
+<ul>
+<li>conventional cryptography</li>
+<li>secret-key encryption</li>
+<li>symmetric-key encryption</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Conventional: Names</h1>
+<ul>
+<li>conventional cryptography</li>
+<li>Symmetric</li>
+<li>secret-key</li>
+<li>shared-key</li>
+<li>or shared-secret!</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Conventional: Names: Why?</h1>
+<ul>
+<li>Symmetric: because the sender and receiver are required to share the same key,</li>
+
+<li>secret-key: this shared key must be kept secret; no one else is allowed to see the key.</li>
+
+<li>shared-key: Use the notation K<sub>A,B</sub> to denote a key shared by A and B.</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: Conventional: Picture</h1>
+<center><img src="pics/conventional_crypto.png"  width="80%"/></center>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Conventional: Origin and Examples</h1>
+<ul>
+<li>Caesar's cipher (OLD!)</li>
+<li>Data Encryption Standard (DES)</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Conventional: example: Caesar's cipher</h1>
+Starting with
+<pre>
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+</pre>
+and sliding everything up by 3, you get
+<pre>
+DEFGHIJKLMNOPQRSTUVWXYZABC
+</pre>
+where D=A, E=B, F=C, and so on.
+<br/>
+Using this scheme, the plaintext, 'SECRET' encrypts as 'VHFUHW'.
+<br/>
+<b>key is 3</b>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Conventional: Pros/Cons</h1>
+<ul>
+<li>Pros: It is very fast.</li>
+<li>Cons: Problem: <b>key distribution</b>
+</li>
+</ul>
+<div class="handout">
+the persistent problem with conventional encryption is key distribution: how do you get the key to the recipient without someone
+intercepting it?
+</div>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Public key</h1>
+<ul>
+<li>The problems of key distribution:</li>
+<li>solved by public key cryptography</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Public key: Origin</h1>
+<ul>
+<li>Concept introduced by Whitfield Diffie and Martin Hellman (1975).</li>
+<li>British Secret Service: J H Ellis: few years before (1970)</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Cryptography: Public key: 2 sides, duality</h1>
+<ul>
+<li>Encryption: sender <b>encrypts</b> with recipient pub key</li>
+<li>Signature: sender <b>signs</b> with his private key</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Public key: Encryption: Schema</h1>
+<center><img src="pics/public_key_crypto.png" width="80%"/></center>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Public key: Signature: Schema</h1>
+<center><img src="pics/digital_signature2.png" width="70%"/></center>
+</div>
+<div class="slide">
+<h1>Cryptography: Uses of digital signatures</h1>
+<ul>
+<li><b>Authentication</b></li>
+<li>Integrity (better than hash)</li>
+<li>Non-repudiation</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Public key: Examples</h1>
+<ul>
+<li>Elgamal (named for its inventor, Taher Elgamal),</li>
+<li>RSA (named for its inventors Rivest, Shamir, and  Adleman), </li>
+<li>Diffie-Hellman</li> 
+<li>DSA, the Digital Signature Algorithm, (invented by David Kravitz, for signature).</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: Public key: Pros/Cons</h1>
+<ul>
+<li>Cons: 
+<ul>
+<li>1000(!?) times slower than conventional</li>
+<li>limit on size(!)</li>
+</ul>
+</li>
+<li>Pros: no key issue</li>
+</ul>
+</div>
+
+
+<!-- ======================== hash ======================= -->
+
+
+
+<div class="slide">
+<h1>Cryptography: hash</h1>
+<ul>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: hash</h1>
+<ul>
+<li>Once the hash is exposed....</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<ul>
+<li>checksum</li>
+<li>hash</li>
+</ul>
+</div>
+
+
+ 
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+
+<center><img src="pics_hash/password.jpg"/></center>
+<br/>
+<center>(<b>Brute</b> force) vs (ease of use)</center>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<ul>
+<li>rainbox tables</li>
+<img src="./pics_hash/Rainbow_table1.svg" width="80%"/>
+<a href="http://en.wikipedia.org/wiki/Rainbow_table">en.wikipedia.org/wiki/Rainbow_table</a>
+</ul>
+</div>
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack: protection: salt</h1>
+<ul>
+<li>salt</li>
+
+</ul>
+</div>
+
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<ul>
+<li><a href="http://www.codinghorror.com/blog/2012/04/speed-hashing.html">http://www.codinghorror.com/blog/2012/04/speed-hashing.html</a></li>
+
+<li>Secure hashes are designed to be slow</li>
+
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<ul>
+<li><a href="http://www.larc.usp.br/~pbarreto/hflounge.html">http://www.larc.usp.br/~pbarreto/hflounge.html</a></li>
+<li>MD4 MD5 dead</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<ul>
+<li>setup: wo ATI Radeon 7970 cards ~ 16000 M c/s with MD5.</li>
+<li>oclHashcat-lite</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<ul>
+<li>full range of a common US keyboard</li>
+<pre>
+all 6 character password MD5s	47 seconds
+all 7 character password MD5s	1 hour, 14 minutes
+all 8 character password MD5s	~465 days
+all 9 character password MD5s	fuggedaboudit</li>
+</pre>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<ul>
+<li>just uppercase, lowercase, and numbers?
+
+<pre>
+all 6 character password MD5s	3 seconds
+all 7 character password MD5s	4 minutes
+all 8 character password MD5s	4 hours
+all 9 character password MD5s	10 days
+all 10 character password MD5s	~625 days
+all 11 character password MD5s	fuggedaboudit</li>
+</pre>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack: speed: algos</h1>
+<ul>
+<li>M/s=number of generated hashes</li>
+<pre>
+MD5	23070.7 M/s
+SHA-1	7973.8 M/s
+SHA-256	3110.2 M/s
+SHA-512	267.1 M/s
+NTLM	44035.3 M/s
+DES	185.1 M/s
+WPA/WPA2	348.0 k/s
+</pre>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack: solution</h1>
+<ul>
+<li>passwords are 12 characters or more</li>
+<li>pass phrases</li>
+<li>Windows 2k and higher support passwords of up to 127 unicode characters.</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+<center><img src="pics_hash/hashed_passwd.gif"/></center>
+<div class="handout">
+http://blog.csdn.net/wangjiannuaa/article/details/6741650
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: hash: attack</h1>
+MD4 is considered to be significantly stronger than DES as
+<ul>
+<li>it allows for longer password lengths, </li>
+<li>it allows for distinction betweenuppercase and lowercase letters</li>
+<li>it does not split the password intosmaller, easier to crack chunks.</li>
+</ul>
+
+Perhaps the biggest complaint with NTLMv2 created hashes is that:
+<b>Windows does not utilize a technique called salting.</b>
+
+<div class="handout">
+http://blog.csdn.net/wangjiannuaa/article/details/6741650
+</div>
+</div>
+
+
+
+
+
+
+
+<div class="slide">
+<h1>authentication: protocols</h1>
+<ul>
+<li>secure?</li>
+<li>building up on cryptography</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: protocols: Symmetric</h1>
+
+Challenge-Response
+
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication: protocols: Challenge-Response</h1>
+<ul>
+<center><img src="pic_krb/alice_bob_syma.jpg" width="60%"/></center>
+</ul>
+<div class="handout">
+Example: Bob and Alice Again
+
+    Alice and Bob are abbreviated by A and B, respectively, and their shared key is denoted as KA,B.
+    One party challenges the other to a response that can be correct only if the other knows the shared secret key.
+
+        also known as challenge-response protocols.
+
+<ol>
+<li>    Alice sends her identity to Bob (message 1), indicating that she wants to set up a communication channel between the two.
+</li>
+<li>
+    Bob sends a challenge RB to Alice, shown as message 2.
+
+·         Such a challenge could take the form of a random number.
+
+·         Alice must encrypt the challenge with the secret key KA,B. that she shares with Bob, and return the encrypted challenge to Bob. This response is shown as message 3 containing KA,B.(RB).
+
+Authentication based on a shared secret key, using a ‘challenge response’ protocol.
+
+Note: R is a random number.
+
+</li>
+<li>
+    When Bob receives the response KA,B.(RB) to his challenge RB, he can decrypt the message using the shared key again to see if it contains RB.
+</li>
+<li>
+
+·         If so, he then knows that Alice is on the other side, for who else could have encrypted RB with KA,B in the first place?
+
+    Alice has not yet verified that it is Bob is on the other side of the channel.
+
+</li>
+<li>
+·         She sends a challenge RA (message 4), which Bob responds to by returning KA,B.(RA), shown as message 5.
+
+    When Alice decrypts it with KA,B and sees her RA, she knows she is talking to Bob.
+</li>
+
+
+
+</ol>
+
+</div>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: protocols: Challenge-Response: WRONG!</h1>
+
+
+<center><img src="pic_krb/alice_bob_syma_wrong.jpg" width="60%"/></center>
+</div>
+
+
+
+<div class="slide" >
+<h1>Authentication: protocols: Challenge-Response: WRONG: reflection attack</h1>
+
+
+<center><img src="pic_krb/alice_bob_syma_wrong_reflection.jpg" width="60%"/></center>
+
+
+<div class="handout">
+The ‘reflection attack’. - Chuck wants Bob to think he is Alice, so he starts up a second session to trick Bob.
+
+    Chuck's goal is to set up a channel with Bob so that Bob believes he is talking to Alice.
+    Chuck can establish this if he responds correctly to a challenge sent by Bob
+
+o        e.g, by returning the encrypted version of a number that Bob sent.
+
+    Without knowledge of KA,B., only Bob can do such an encryption, and this is precisely what Chuck tricks Bob into doing.
+
+<ol>
+<li>1.      Chuck starts out by sending a message containing Alice's identity A, along with a challenge RC.
+
+</li>
+<li>
+2.      Bob returns his challenge RB and the response KA,B(RC) in a single message.
+</li>
+<li>
+
+3.      Chuck needs to prove he knows the secret key by returning KA,B(RB) to Bob.
+<ul>
+<li>
+o        He does not have KA,B.
+</li>
+<li>
+
+o        He attempts to set up a second channel to let Bob do the encryption for him.
+
+</li>
+</ul>
+</li>
+<li>
+4.      Chuck sends A and RB in a single message as before, but now pretends that he wants a second channel. This is shown as message 3
+
+ 
+
+ 
+
+</li>
+<li>
+5.      Bob not recognizing that he, himself, had used RB before as a challenge, responds with KA,B(RB) and another challenge RB2, shown as message 4.
+</li>
+<li>
+
+6.      At that point, Chuck has KA,B(RB) and finishes setting up the first session by returning message 5 containing the response KA,B(RB), which was originally requested from the challenge sent in message 2.
+</li>
+
+
+</ol> 
+
+Mistake 1: the two parties in the new version of the protocol were using the same challenge in two different runs of the protocol.
+
+ 
+
+Better Design: always use different challenges for the initiator and for the responder.
+
+    In general, letting the two parties setting up a secure channel do a number of things identically is not a good idea.
+
+ 
+
+Mistake 2: Bob gave away valuable information in the form of the response KA,B(RC) without knowing for sure to whom he was giving it.
+
+    Not violated in the original protocol, in which Alice first needed to prove her identity, after which Bob was willing to pass her encrypted information.
+</div>
+
+
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: protocols: Symmetric: Problem: scalability</h1>
+
+
+<center><img src="pic_krb/keynb.png" width="60%"/></center>
+
+<div class="handout">
+Problem with a shared secret key for authentication: scalability
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: protocols: Symmetric: Solution 1: KDC</h1>
+<ul>
+<li>Key Distribution Center: N keys</li>
+<li>(Solution 2: session keys SSL)</li>
+</ul>
+</div>
+
+
+
+
+<!-- ========================= NTLM ======================= -->
+
+
+<div class="slide">
+<h1>authentication: ntlm</h1>
+<b>Protect Your Windows Network: From Perimeter to Data</b> <br/>
+by Jesper M. <b>Johansson</b> and Steve  <b>Riley</b> (May 30, 2005) <br/>
+Chapter 11. Passwords and Other Authentication Mechanisms
+</div>
+
+
+<div class="slide">
+<h1>authentication: ntlm</h1>
+<a href="http://msdn.microsoft.com/en-us/library/cc236715.aspx">http://msdn.microsoft.com/en-us/library/cc236715.aspx</a>
+<br/>
+<b>Therefore, applications are generally advised not to use NTLM.</b>
+<div class="handout">
+5.1 Security Considerations for Implementers
+5 out of 6 rated this helpful - Rate this topic
+
+Implementers should be aware that NTLM does not support any recent cryptographic methods, such as AES or SHA-256. It uses cyclic redundancy check (CRC) or message digest algorithms ([RFC1321]) for integrity, and it uses RC4 for encryption. Deriving a key from a password is as specified in [RFC1320] and [FIPS46-2]. <b>Therefore, applications are generally advised not to use NTLM.</b>
+
+The NTLM server does not require the NTLM client to send the MIC, but sending the MIC when the timestamp is present greatly increases security. Although implementations of NLMP will work without support for MIC, they will be vulnerable to message tampering.
+ 
+</div>
+</div>
+
+
+<div class="slide">
+<h1>authentication: ntlm: ntlmv1 and ntlmv2</h1>
+<ul>
+<li>
+<a href="http://msdn.microsoft.com/en-us/library/cc236699.aspx">http://msdn.microsoft.com/en-us/library/cc236699.aspx</a>
+</li>
+
+<li>
+<a href="http://msdn.microsoft.com/en-us/library/cc236700.aspx">http://msdn.microsoft.com/en-us/library/cc236700.aspx</a>
+</li>
+
+</div>
+
+
+<div class="slide">
+<h1>authentication: ntlm: ntlmv1 and LM</h1>
+<center><img src="pics_ntlm/ntlmv1_lm.gif"/></center>
+<div class="handout">
+http://flylib.com/books/en/1.376.1.112/1/
+Protect Your Windows Network: From Perimeter to Data by Jesper M. Johansson and Steve Riley (May 30, 2005) 
+Chapter 11. Passwords and Other Authentication
+Mechanisms
+
+
+
+any password that generates a particular hash is going to result in a successful logon. In addition, in late 2004, a paper was published describing how to create collisions in MD4, using pen and paper! Clearly, MD4 is no longer a secure algorithm. This does not mean that all systems using MD4 as a password storage algorithm should be changed. We need to take into account what it takes to get password hashes on those systems first. The best protection against password attacks is, and always has been, to stop attackers from getting your hashes. We return to this in a few pages. 
+
+<br/>
+
+How Passwords Are Used
+
+Passwords are obviously used for authentication. Windows supports many different kinds of authentication. The four main protocols are LM authentication, which uses the LM hash, NTLM (sometimes referred to as NTLMv1), NTLMv2, and Kerberos, all of which use the NT hash. Kerberos is well documented in RFCs 1510 (http://www.ietf.org/rfc/rfc1510.txt?number=1510) and 1964 ( http://www.ietf.org/rfc/rfc1964.txt?number=1964), and therefore we do not deal with it further here. The other three are interesting, however.
+
+LM authentication is designed primarily for backward compatibility. It is used to authenticate access from Windows 3.11, Windows 95, and Windows 98. If Windows 95 or 98 has the Directory Services Client (see KB 323466), they can use some version of NTLM instead. LM authentication is also used to authenticate to servers running Windows 95 and 98 if they are using share-level passwords
+
+<br/>
+
+NTLM authentication has been the default authentication protocol in Windows NT since NT 3.1. It was only replaced by Kerberos in Windows 2000. It is still used in many situations, such as when authenticating in a Windows NT 4.0 domain or in a workgroup and when authenticating between systems in a Windows 2000 or higher domain and systems outside the domain or that have no trust relationship with the domain. Within a Windows 2000 or higher domain and between systems that have trust relationships based on such domains, such as within a forest, Kerberos is always usedexcept in one situation. The exception is when a resource is accessed using an IP address rather than a host name. Kerberos is based on host names. Because Windows DNS does not create reverse lookup zones by default, the protocol cannot rely on a way to resolve IP addresses to host names . Therefore, it always falls back to either NTLM or NTLMv2 in that situation. As described earlier, the choice of NTLM or NTLMv2 depends on the configuration of the client.
+
+<br/>
+
+There are several very important points to be made about Figure 11-4. First, the client always sends both authentication protocols, regardless of whether the server supports them. While the client is processing the challenge, the server does the same, using the stored hashes discussed earlier. Upon receipt of the response from the client, the server compares the NTLM result it calculated to the result the client sent. If the two match, the client is authenticated. If not, it compares the LM result it calculated to the one the client sent. If neither the NTLM nor the LM results match, the server generates an authentication failure message.
+<br/>
+
+<b>Notice that the algorithm used is DES. Because DES is no longer considered cryptographically secure, neither is the authentication sequence. If an attacker manages to sniff both the challenge and the response off the wire, the password can be brute forced from the authentication sequence. It is just one additional encryption operation. Tools such as LC5 (the latest version of the popular password cracker L0phtCrack) can sniff these sequences off the wire and crack them.</b>
+<br/>
+
+Take another look at Figure 11-4. Pay attention to the secret data used in the authentication process. The only secret used is the hash . The actual response is computed as follows:
+
+1.
+	
+
+Take the 8-byte challenge.
+
+2.
+	
+
+Pad the relevant hash with 5 nulls, making it 168 bits.
+
+3.
+	
+
+Split the hash+nulls into three chunks and use each as a key to encrypt the challenge.
+
+4.
+	
+
+Concatenate the results from Step 3.
+
+<b>As this description shows, the security of the entire authentication algorithm is based on the protection of the hash. In other words, if an attacker has access to the hash, he has everything he needs to authenticate as that user. The hashes are plaintext equivalent . An attacker simply needs a tool that can compute and transmit the response based on an arbitrary hash. This is known as a pass-the-hash attack. Put another way, if bad guys have your password hashes, cracking is unnecessary. You have already been hacked!</b>
+
+NOTE: Password hashes are plaintext equivalent in challenge-response protocols. In other words, if a bad guy has the password hashes, there is no need to crack them. All that is needed is a tool that can generate responses based on arbitrary hashes. This means that hashes must be very well protected. To prevent this type of attack the only solution is to not not let bad guys get to your password hashes.
+
+
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+<div class="slide">
+<h1>authentication: ntlm: ntlmv2</h1>
+<center><img src="pics_ntlm/ntlmv2.gif"/></center>
+<div class="handout">
+http://flylib.com/books/en/1.376.1.112/1/
+
+
+
+
+NTLMv2
+
+The most misunderstood authentication protocol in Windows is NTLMv2. <b>NTLMv2 first appeared in Windows NT 4.0 Service Pack 4 and was designed to combat certain weaknesses such as replay vulnerabilities and the weak DES encryption in NTLM.</b> Although NTLMv2 is technically considered a trade secret, certain facts are well known. Consider Figure 11-5.
+Figure 11-5. NTLMv2 authentication.
+
+
+As Figure 11-5 shows, the NTLMv2 protocol takes the place of the NTLM protocol in the authentication messages. A server that is NTLMv2 capable first checks whether the client's response could be an NTLMv2 response. This is done by comparing the length of the response, because the NTLM response is fixed-length and the NTLMv2 response is variable length, but always longer than the NTLM response. If the client's response is not an NTLMv2 response, or if it did not match the NTLMv2 response the server calculated, the server falls back to the same behavior as a non-NTLMv2-compatible server. If all three checks fail, the server generates a failed authentication message. This means that if the client does not support NTLMv2 but the server requires it, the only error message the client will see is "bad username or password." Because there is no negotiation of the authentication protocols, there is no way for the client to know why it failed. Also notice that the NTLMv2 protocol uses the NT hash. There is no separate NTLMv2 hash .
+
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ================= kerberos ====================== -->
+
+
+
+
+
+
+<div class="slide">
+<h1>KDC principle: Problem</h1>
+
+<center><img src="pic_krb/kdc_principle.jpg" width="60%"/></center>
+
+
+<div class="handout">
+    If Alice wants to set up a secure channel with Bob, she can do so with the help of a (trusted) KDC.
+    The KDC hands out a key to both Alice and Bob that they can use for communication,
+
+Principle of using a KDC.
+
+ 
+<ul>
+  <li>  Alice sends a message to the KDC, telling it that she wants to talk to Bob.
+    The KDC returns a message containing a shared secret key KA,B that she can use.</li>
+
+  <li>  The message is encrypted with the secret key KA,KDC that Alice shares with the KDC.</li>
+
+  <li>  The KDC sends KA,B to Bob, but now encrypted with the secret key KB,KDC it shares with Bob.</li>
+
+ </ul>
+
+Drawbacks :
+
+    Alice may want to set up a secure channel with Bob even before Bob had received the shared key from the KDC.
+    The KDC is required to pass Bob the key.
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1>KDC principle: Solution: Ticket</h1>
+<center><img src="pic_krb/ticket.jpg" width="60%"/></center>
+<div class="handout">
+Solution: ticket
+<ul>
+    <li>KDC passes KB,KDC(KA,B) back to Alice and lets her connect to Bob.</li>
+    <li>The message KB,KDC(KA,B) is also known as a ticket.</li>
+   <li> It is Alice's job to pass this ticket to Bob.</li>
+    <li>Note that Bob is still the only one that can make sensible use of the ticket, as he is the only one besides the KDC who knows how to decrypt the information it contains.</li>
+</ul>
+
+ </div>
+
+</div>
+
+
+
+<div class="slide">
+<h1>Needham-Schroeder protocol is a multiway challenge-response protocol</h1>
+<center><img src="pic_krb/needham.jpg" width="60%"/></center>
+<div class="handout">
+    When Alice wants to set up a secure channel with Bob, she sends a request to the KDC containing a challenge RA, along with her identity A and that of Bob.
+    The KDC responds by giving her the ticket KB,KDC(KA,B), along with the secret key KA,B that she can subsequently share with Bob.
+
+·         The challenge RA1 that Alice sends to the KDC along with her request to set up a channel to Bob is also known as a nonce.
+
+·         A nonce is a random number that is used only once, such as one chosen from a very large set.
+
+·         Purpose of a nonce is to uniquely relate two messages to each other
+
+·         e.g. message 1 and message 2.
+
+·         by including RA1 again in message 2, Alice will know for sure that message 2 is sent as a response to message 1, and that it is not a replay of an older message.
+
+·         Message 2 also contains B, the identity of Bob.
+
+·         By including B, the KDC protects Alice against the following attack.
+
+ 
+
+    After the KDC has passed the ticket to Alice, the secure channel between Alice and Bob can be set up.
+
+·         Alice sends message 3, which contains the ticket to Bob, and a challenge RA2 encrypted with the shared key KA,B that the KDC had just generated.
+
+    Bob then decrypts the ticket to find the shared key, and returns a response RA2 - 1 along with a challenge RB for Alice.
+
+NOTE: by returning RA2 - 1 and not just RA2, Bob not only proves he knows the shared secret key, but also that he has actually decrypted the challenge.
+
+·         This ties message 4 to message 3 in the same way that the nonce RA tied message 2 to message 1.
+
+ 
+
+Weak Point:
+
+    If Chuck got an old key KA,B, he could replay message 3 and get Bob to set up a channel.
+    Bob will then believe he is talking to Alice, while, in fact, Chuck is at the other end.
+    Need to relate message 3 to message 1 - make the key dependent on the initial request from Alice to set up a channel with Bob.
+
+ </div>
+</div>
+
+
+
+<div class="slide">
+<h1>Protection against malicious reuse of a previously generated session key in the Needham-Schroeder protocol.</h1>
+<center><img src="pic_krb/needham_protect.jpg" width="60%"/></center>
+<div class="handout">
+Solution: incorporate a nonce in the request sent by Alice to the KDC.
+
+    The nonce has to come from Bob: this assures Bob that whoever wants to set up a secure channel with him, will have gotten the appropriate information from the KDC.
+    Alice first requests Bob to send her a nonce RB1, encrypted with the key shared between Bob and the KDC.
+    Alice incorporates this nonce in her request to the KDC, which will then decrypt it and put the result in the generated ticket.
+    Bob will know for sure that the session key is tied to the original request from Alice to talk to Bob.
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Authentication in Kerberos.</h1>
+<center><img src="pic_krb/kerb1.jpg" width="80%"/></center>
+<div class="handout">
+Example: Kerberos (Steiner et al., 1988)
+
+·        Kerberos is a network authentication protocol.
+
+·        It is designed to provide strong authentication for client/server applications by using secret-key cryptography.
+
+    Kerberos was developed at M.I.T. and is based on the Needham-Schroeder authentication protocol.
+    Two different versions of Kerberos- version 4 (V4) and version 5 (V5).
+        V5 being more flexible and scalable.
+
+ 
+
+Two different components:
+
+Authentication Server (AS) - responsible for handling a login request from a user.
+
+    AS authenticates a user and provides a key that can be used to set up secure channels with servers.
+
+Ticket Granting Service (TGS) - sets up secure channels.
+
+    The TGS hands out special messages, known as tickets, that are used to convince a server that the client is really who he or she claims to be.
+
+ 
+
+Example: Alice sets up a secure channel with server Bob.
+
+For Alice to log onto the system, she can use any workstation available. The workstation sends her name in plaintext to the AS, which returns a session key KA,TGS and a ticket that she will need to hand over to the TGS.
+
+ 
+
+The ticket that is returned by the AS contains the identity of Alice, along with a generated secret key that Alice and the TGS can use to communicate with each other. The ticket itself will be handed over to the TGS by Alice. Therefore, it is important that no one but the TGS can read it. For this reason, the ticket is encrypted with the secret key KAS,TGS shared between the AS and the TGS.
+
+ 
+
+ 
+
+Authentication in Kerberos.
+
+Message 1 - Alice types in her login name at a workstation.
+
+Message 2 - contains login name and is sent to the AS.
+
+Message 3 - contains the session key KA,TGS and the ticket KAS,TGS(A,KA,TGS).
+
+    To ensure privacy, message 3 is encrypted with the secret key KA,AS shared between Alice and the AS.
+
+Message 4 - workstation prompts Alice for her password
+
+Message 5 – PWD returned to workstation which generates shared key KA,AS and find session key KA,TGS.
+
+Message 6 –to talk to Bob, she requests the TGS to generate a session key for Bob.
+
+    The fact that Alice has the ticket KAS,TGS(A,KA,TGS) proves that she is Alice.
+    Message alsocontains a timestamp, t, encrypted with the secret key shared between Alice and the TGS.
+
+ </div>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Setting up a secure channel with Bob</h1>
+<center><img src="pic_krb/kerb2.jpg"/></center>
+<div class="handout">
+1.     Alice sends to Bob a message containing the ticket she got from the TGS, along with an encrypted timestamp.
+
+2.     When Bob decrypts the ticket, he notices that Alice is talking to him, because only the TGS could have constructed the ticket.
+
+·        He also finds the secret key KA,B, allowing him to verify the timestamp.
+
+·        At that point, Bob knows he is talking to Alice and not someone maliciously replaying message 1.
+
+·        By responding with KA,B(t + 1), Bob proves to Alice that he is indeed Bob.
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================== ldap  ========================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: ldap: bind</h1>
+<center><img src="pics_ldap/Bind.png"/></center>
+</div>
+
+<div class="slide">
+<h1>Authentication: ldap: bind,search,bind</h1>
+<center><img src="pics_ldap/Search_and_bind.png"/></center>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ================================ kerberos ============= -->
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Secure</h1>
+<ul>
+<li>Kerberos is secure since it never transmits passwords over the network in the clear</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Needham-Schroeder Protocol</h1>
+<ul>
+<li>Needham-Schroeder Protocol</li>
+
+
+<li><a href="http://en.wikipedia.org/wiki/Needham%E2%80%93Schroeder_protocol">wikipedia</a></li>
+<li>Needham-Schroeder Symmetric Key Protocol</li>
+<li>published a paper in
+December of 1978 </li>
+
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Needham-Schroeder Protocol: flaw</h1>
+<ul>
+<li>1995</li>
+
+</ul>
+<div class="handout">
+http://www.mitre.org/news/the_edge/february_01/guttman.html
+http://csis.pace.edu/~marchese/CS865/Lectures/Chap9/Chap9New/Chapter9.html ********
+</div>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Notation</h1>
+<ul>
+<li>http://en.wikipedia.org/wiki/Security_protocol_notation
+</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: GSSAPI</h1>
+<ul>
+<li>Generic Security Services API</li>
+<li>RFC 2743, which documents the basic GSSAPI message types, </li>
+<li>RFC 1509, which defines the C language bindings and API, and </li>
+<li>RFC 1964, which defines the Kerberos 5 GSSAPI mechanism.</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: SPNEGO</h1>
+<ul>
+<li>Simple and Protected GSSAPI Negotiation Mechanism</li>
+<li>SPNEGO, documented in RFC 2478</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: </h1>
+<ul>
+<li>Single-sign-on</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: </h1>
+<ul>
+<li>Mutual authentication</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Trusted third-party</h1>
+<ul>
+<li>SPOF</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Picture?</h1>
+<ul>
+<li><a href="https://www.google.com/search?q=kerberos protocol&amp;tbm=isch">https://www.google.com/search?q=kerberos protocol&amp;tbm=isch</a></li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Boxes</h1>
+<ul>
+<li></li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Symmetric Crypto</h1>
+<ul>
+<li></li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Tickets</h1>
+<ul>
+<li></li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: port 88 TCP/UDP</h1>
+<ul>
+<li>KRB5KRB_ERR_RESPONSE_TOO_BIG</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+<div class="slide">
+<h1>Authentication: Kerberos: Reference</h1>
+<ul>
+Chap 9 of Distributed Systems: <br/>
+Principles and Paradigms (2nd Edition) [Hardcover] <br/>
+Andrew S. Tanenbaum (Author), Maarten Van Steen (Author)  <br/>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Implementations</h1>
+<ul>
+<li>MIT</li>
+<li>heimdal</li>
+<li>AD</li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: Microsoft</h1>
+<ul>
+<li></li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: AD: DNS</h1>
+<ul>
+<li>_kerberos._udp.DnsDomainName</li>
+<li>/etc/krb5.conf</li>
+<li>http://tools.ietf.org/id/draft-ietf-krb-wg-krb-dns-locate-02.txt</li>
+</ul>
+<div class="handout">
+http://tools.ietf.org/id/draft-ietf-krb-wg-krb-dns-locate-02.txt
+http://technet.microsoft.com/en-us/library/cc961719.aspx
+http://web.mit.edu/kerberos/krb5-1.5/krb5-1.5.4/doc/krb5-admin/Hostnames-for-KDCs.html
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: AD: ldap</h1>
+<ul>
+<li></li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: Kerberos: AD: kerberos</h1>
+<ul>
+<li></li>
+</ul>
+<div class="handout">
+</div>
+</div>
+
+
+
+
+
+<!-- ============================= cas ============================ -->
+
+<div class="slide">
+<h1>Authentication: CAS</h1>
+<ul>
+<li>
+<a href="http://www.unicon.net/node/1269">http://www.unicon.net/node/1269</a>
+How secure is the CAS Service Ticket?
+</li>
+
+
+<li>
+<a href="http://www.unicon.net/node/1268">http://www.unicon.net/node/1268</a>
+Is the CAS "Ticket Granting Cookie" Secure?
+</li>
+
+<li>
+<a href="http://www.jasig.org/cas/protocol">http://www.jasig.org/cas/protocol</a>
+</li>
+</ul>
+
+
+</div>
+
+
+
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+<!-- ============================= ssl ============================ -->
+
+
+
+<div class="slide">
+<h1>Cryptography: Note: Hash functions</h1>
+
+<ul>
+<li>The young man and the old camel > Hash=Sum of bytes</li>
+
+<li>The young camel and the old man > Hash=Sum of bytes</li>
+
+<li>cryptographic strength</li>
+</ul>
+<div class="handout">
+A trivial example of a hash function is to add all of the byte values of a message together, and take the sum
+modulus a maximum number say, 1024. It is not possible to reconstruct the original input stream from this
+sum. Another property of a hash algorithm is its cryptographic strength, or the ability for attackers to craft
+input designed to produce a given hash value. 
+</div>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: Combining the two!</h1>
+
+<h2>SOLUTION: Public key AND Conventional cryptography</h2>
+<ul>
+<li>distribute the key with Public key cryptography</li>
+<li>distribute the content with Conventional cryptography</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: names</h1>
+
+<ul>
+<li>key: private key</li>
+<li>cert: public key</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: protocol idea, simple</h1>
+
+<center><img width="60%" src="pics/ssl_protocol_alex.png"/></center>
+
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: problem: man-in-the-middle</h1>
+
+<center><img  width="80%" src="pics/man_in_the_middle.png"/></center>
+
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: CA: solution to man-in-the-middle</h1>
+<ul>
+<li>Signature and CA</li>
+<li>PKI</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: CA: signature</h1>
+
+<center><img  width="60%" src="pics/800px-Digital_Signature_diagram.svg.png"/></center>
+
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: CA: CRL</h1>
+<ul>
+<li>CERT Revocation list</li>
+<li>http://crl.cacert.org/revoke.crl</li>
+<li>DigiNotar</li><!-- bankrupt -->
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: names</h1>
+<ul>
+<li>SSL: Secure Socket Layer (Sockets is TCP/IP API)
+</li>
+<li>TLS: Transaction Layer Security (IETF standard SSL)
+</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: where in the stack?</h1>
+<center><img src="pics/stack2.png"/></center>
+
+</div>
+
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: network layers pic</h1>
+<center><img src="pics/ssl-layers.gif"/></center>
+</div>
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: Pros/Cons</h1>
+<ul>
+<li>Pros:</li>
+<ul>
+<li>Easy to implement and use</li>
+<li>Deployed in most browsers, servers</li>
+</ul>
+<li>Cons:</li>
+<ul>
+<li>Protects only if used by appl.</li>
+<li>Vulnerable to Clogging (<b>DOS</b>)</li>
+<li><b>TCP</b> only (no UDP)</li>
+<li>Headers exposed</li>
+</ul>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: Alternative 1: Add to Each Application</h1>
+
+<center><img src="pics/alt1b.png"/></center>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: Alternative 1: Pros/Cons</h1>
+<ul>
+<li>Pros:</li>
+<ul>
+<li><b>easy, independent</b></li>
+<li>awareness of semantics</li>
+</ul>
+<li>Cons:</li>
+<ul>
+<li><b>Change each app</b>, computer...</li>
+<li>Internet (network) Layer</li>
+<li>hard, wasteful, error-prone,</li>
+<li>must trust all computers</li>
+<li>No protection for headers</li>
+</ul>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Cryptography: Alternative 1: Examples</h1>
+<ul>
+<li>S/Key (login)</li>
+<li>Payment protocols, e.g. SET (credit card payments)</li>
+<li>Tools: XML security, <b>Kerberos</b>, ...</li>
+<li>Secure E-mail (S/MIME,<b>PGP</b>,...)</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Cryptography: Alternative 2: IP Security</h1>
+<center><img src="pics/alt2b.png"/></center>
+</div>
+
+<div class="slide">
+<h1>Cryptography: Alternative 2: Pros/Cons</h1>
+<ul>
+<li>Pros:</li>
+<ul>
+<li>Protect all applications, data (IP header, addresses)</li>
+<li>No change to applications</li>
+<li>Gateway can protect many hosts</li>
+<li>Anti-clogging mechanisms</li>
+<li>Implemented by operating systems, Routers, ...</li>
+<li>Standard</li>
+
+</ul>
+
+<li>Cons:</li>
+<ul>
+<li>Implementation,</li>
+<li>interoperability, availability</li>
+<li>Application awareness/control is difficult</li>
+</ul>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: Easy: Proxy</h1>
+<ul>
+<li>stunnel: impas, https, etc..</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: Key and Cert formats</h1>
+<ul>
+<li>X.509</li>
+<li>DER(Distinguished Encoding Rules) binary</li>
+<li>PEM (Privacy Enhanced Mail) ascii base64 encode</li>
+<li>PKCS#12 file (.pfx or .p12) archive</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: Swiss Army Knife</h1>
+<ul>
+<li><b>openssl</b></li>
+<li>library + command line</li>
+<li>(keytool)</li>
+</ul>
+
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: LABS</h1>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: LAB 1: encryption</h1>
+<pre>
+# Conventionnal encryption:
+# Encrypt a file using triple DES in CBC mode with password on command line
+
+openssl enc -des3 -e -k mypassword -in file.txt  -out file.des3
+openssl enc -des3 -d -k mypassword -in file.des3 -out file_dec.txt
+
+
+# Public key encryption:
+
+# generate the private key:
+openssl genrsa -out private.pem 1024
+# generate the publick key:
+openssl rsa -in private.pem -out public.pem -outform PEM -pubout
+# encrypt:
+# -pubin: the input file is an RSA public key.
+# -certin: the input is a certificate containing an RSA public key.
+openssl rsautl -encrypt -inkey public.pem  -in file_small.txt -out file_small.ssl -pubin 
+openssl rsautl -decrypt -inkey private.pem -in file_small.ssl -out file_small_dec.txt
+# M: max number of bytes 
+# which can be encrypted with a particular key size with the following:
+
+# M=((KeySize - 384) / 8) + 37
+</pre>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: LAB 2: Client SSL 1</h1>
+<pre>
+# Create the CA Key and Certificate for signing Client Certs
+openssl genrsa -des3 -out ca.key 4096
+openssl req -new -x509 -days 365 -key ca.key -out ca.crt -subj '/CN=Alex CA'
+
+# Create the Server Key, CSR, and Certificate
+openssl genrsa -des3 -out server.key 1024
+(or 
+openssl genrsa  -out server.key 1024)
+openssl req -new -key server.key -out server.csr -subj '/CN=server1.foo'
+
+# We're self signing our own server cert here.  This is a no-no in production.
+openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
+
+# Create the Client Key and CSR
+openssl genrsa -des3 -out client.key 1024
+openssl req -new -key client.key -out client.csr -subj '/CN=alfresco-system'
+
+# Sign the client certificate with our CA cert.  Unlike signing our own server cert, this is what we want to do.
+openssl x509 -req -days 365 -in client.csr -CA ca.crt -CAkey ca.key -set_serial 02 -out client.crt
+
+
+
+</pre>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: LAB 2: Client SSL 2</h1>
+encryption, signature (authentication X2)
+<pre>
+
+# check the subject of the cert
+openssl x509 -subject -issuer -noout -in ca.crt
+openssl x509 -subject -issuer -noout -in client.crt
+openssl x509 -subject -issuer -noout -in server.crt
+# or more details
+openssl x509 -text -noout -in ca.crt
+openssl x509 -text -noout -in client.crt
+openssl x509 -text -noout -in server.crt
+
+
+</pre>
+</div>
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: LAB 2: Client SSL 3</h1>
+<pre>
+# package the client private and public keys in a P12 
+(openssl pkcs12 -export -out client.p12 -in client.crt -inkey client.key -chain) # requires the CA cert in standard location
+openssl pkcs12 -export -out client.p12 -in client.crt -inkey client.key -certfile ca.crt
+# print some info (check CA is included)
+openssl pkcs12 -info -in client.p12 -nodes
+openssl pkcs12 -info -in client.p12 -nokeys
+
+
+
+
+</pre>
+</div>
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: LAB 2: Client SSL 4</h1>
+<pre>
+
+# in firefox https://server1.foo:443/index.html
+This Connection is Untrusted
+The certificate is not trusted because the issuer certificate is not trusted.
+# http://www.cyberciti.biz/faq/firefox-adding-trusted-ca/
+# advanced->encryption
+
+
+openssl s_client -CAfile ssl/compute/ca/ca.crt -connect server1.foo:443 
+
+openssl s_server -cert server.crt -key server.key -www
+https://server1.foo:4433/
+
+
+http://forums.mozillazine.org/viewtopic.php?f=38&amp;t=372781
+If you dont know your master password paste this in your address bar of firefox:
+
+chrome://pippki/content/resetpassword.xul 
+and click Reset button. Next time you will be prompt for a new master password for Firefox!
+
+
+(Error code: sec_error_reused_issuer_and_serial)
+
+
+</pre>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Cryptography: SSL/TLS: LAB 2: Client SSL 5</h1>
+<pre>
+&lt;VirtualHost server1.foo:443>
+DocumentRoot "/var/www/SSL"
+ServerName "server1.foo"
+SSLEngine on
+CustomLog logs/ssl_request_log "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x %{SSL_CLIENT_S_DN_CN}x \"%r\" %b"
+SSLCipherSuite HIGH:MEDIUM
+SSLProtocol all -SSLv2
+SSLCertificateFile /home/madon/ssl/compute/ca/server.crt
+SSLCertificateKeyFile /home/madon/ssl/compute/ca/server.key
+SSLCertificateChainFile /home/madon/ssl/compute/ca/ca.crt
+SSLCACertificateFile /home/madon/ssl/compute/ca/ca.crt
+&lt;Location "/">
+    SSLRequireSSL	
+     Options All
+     Order allow,deny
+     Allow from all
+&lt;/Location>
+# http://httpd.apache.org/docs/2.0/ssl/ssl_howto.html#certauthenticate
+SSLVerifyClient      none
+&lt;Directory /var/www/SSL/Certneeded>
+  SSLVerifyClient      require
+  SSLVerifyDepth       5
+  SSLCACertificateFile /home/madon/ssl/compute/ca/ca.crt
+  SSLOptions           +FakeBasicAuth
+  SSLRequireSSL
+  SSLRequire           %{SSL_CLIENT_S_DN_CN}  eq "alfresco-system" 
+&lt;/Directory>
+&lt;/VirtualHost>
+
+
+</pre>
+</div>
+
+
+<div class="slide">
+
+<h1>Cryptography: SSL Questions</h1>
+
+<ol>
+<li>Question: How old is conventional cryptography?</li>
+<li>Question: How old is Public key cryptography?</li>
+<li>Question: What is the difference between encryption and signature?</li>
+<li>Question: Is PEM binary or ASCII?</li>
+<li>Question: Is RSA a public key or conventional algorithm?</li>
+<li>Question: Is DES a public key or conventional algorithm?</li>
+<li>Question: Is SSL/TLS using public key or conventional cryptography?</li>
+<li>Question: At what level in the TCP/IP stack is SSL/TLS</li>
+<li>Question: Can SSL/TLS be used over UDP?</li>
+<li>Question: Can SSL/TLS be used to secure other protocols than HTTP?</li>
+
+
+
+</ol>
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ============================= -->
+<!--          kerberos             -->
+<!-- ============================= -->
+<!-- kerberos -->
+
+
+
+
+
+<div class="slide">
+<h1>LDAP sync: Issue example</h1>
+<ul>
+<li>empty groups</li>
+<li>ldap.synchronization.queryBatchSize</li>
+<li>jconsole</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>authentication: kerberos: Kerberos and Share</h1>
+<ul>
+Forwardable tickets
+
+<img src="pica/kerberos_wireshark_forwardable.png"/>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>authentication: kerberos: Kerberos and Share</h1>
+<ul>
+
+
+Once the TKT_FLG_FORWARDABLE flag is set on a ticket, the user can use this ticket to request a new ticket, but with a different IP address.
+</ul>
+
+
+<a href="http://www.cmf.nrl.navy.mil/CCS/people/kenh/kerberos-faq.html#forward">http://www.cmf.nrl.navy.mil/CCS/people/kenh/kerberos-faq.html#forward</a>
+<a href="http://download.oracle.com/docs/cd/E19963-01/html/821-1456/userseamsapp1.html">http://download.oracle.com/docs/cd/E19963-01/html/821-1456/userseamsapp1.html</a>
+<br/>
+
+This is used in Share authentication.
+<br/>
+
+
+
+<a href="http://www.microsoft.com/mspress/books/sampchap/4680.aspx">http://www.microsoft.com/mspress/books/sampchap/4680.aspx</a>
+
+
+</div>
+
+
+
+
+<div class="slide">
+<h1>authentication: kerberos: Kerberos and Share</h1>
+<ul>
+
+Edit /etc/krb5.conf and add the following line in [libdefaults] section
+  forwardable = true 
+
+
+<a href="https://issues.alfresco.com/jira/browse/ALF-6286">https://issues.alfresco.com/jira/browse/ALF-6286</a>
+<pre>
+man kinit:
+       -f     request forwardable tickets.
+
+
+klist -ef
+
+you should see "Flags: FRIA" on your TGT and "Flags: FRAO" on your TGS 
+to expect Kerberos delegation between Share and Explorer to work. 
+</pre>
+</ul>
+</div>
+
+
+
+<!-- ============================= -->
+<!--          ssl layers          -->
+<!-- ============================= -->
+
+<div class="slide">
+<h1></h1>
+<ul>
+<li></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>SSL 'layers'</h1>
+<ul>
+<li>mod_ssl vs tomcat</li>
+<li>stunnel</li>
+<li>appliance</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>SSL 'layers': CGI</h1>
+<ul>
+<li>apache: AJP</li>
+<li>servlet: getScheme(), getSecure()</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>SSL 'layers': HTTP</h1>
+<ul>
+<li>ENH: <a href="https://issues.alfresco.com/jira/browse/ALF-11430">https://issues.alfresco.com/jira/browse/ALF-11430</a></li>
+<li>
+<pre>
+X-Forwarded-Proto
+Front-End-Https
+</pre>
+</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>SSL 'layers': carefull when forcing</h1>
+<ul>
+<li>internal: http</li>
+<li>external: https</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>SSL 'layers': note on VTI</h1>
+<ul>
+<li>jetty can do AJP</li>
+<li><a href="https://issues.alfresco.com/jira/browse/ALF-11338">https://issues.alfresco.com/jira/browse/ALF-11338</a>
+</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Load balancing layers</h1>
+<ul>
+<li>mod_proxy</li>
+<li>mod_jk</li>
+<li>appliance</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Alfresco 4 'layers'</h1>
+<ul>
+<!-- <li>layers Share, alfresco, solr</li>-->
+</ul>
+<center><img src="pica/alf4.png"/></center>
+</div>
+
+
+
+
+
+<!-- ============================= -->
+<!--          auth layers          -->
+<!-- ============================= -->
+
+
+
+<div class="slide">
+<h1>Authentication layers</h1>
+<ul>
+<li>AD</li>
+<li>openldap</li>
+<li>external <b>subsystem</b>(CAS, etc..)</li>
+<li>appliance (typ. no AJP)</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication layers: CGI</h1>
+<ul>
+<li>AJP</li>
+<li>getRemoteUser() method</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication layers: HTTP header</h1>
+<ul>
+<li>appliance: no AJP</li>
+<li>see external subsystem (no Share header based)
+<pre>
+external.authentication.proxyHeader
+</pre></li>
+</ul>
+</div>
+
+
+
+
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+
+
+<div class="slide">
+<h1>Authentication</h1>
+<ul>
+<li>subsystems</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: list</h1>
+<ul>
+<li>alfrescoNtlm</li>
+<li>passthru</li>
+<li>ldap</li>
+<li>ldap-ad</li>
+<li>kerberos</li>
+<li>external</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Authentication: list 2</h1>
+<ul>
+<li>cookies</li>
+<li>tickets</li>
+<li>CGI</li>
+<li>headers</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication URLs</h1>
+<ul>
+
+
+
+<ul>
+    <li>/alfresco/service/  (or /alfresco/s) = basic authentication</li>
+    <li>/alfresco/wcservice/ (or /alfresco/wcs) = authentication chain</li>
+</ul>
+
+web.xml file.
+
+
+
+see <a href="http://wiki.alfresco.com/wiki/Web_Scripts">http://wiki.alfresco.com/wiki/Web_Scripts</a>
+</ul>
+</div>
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: SSO 1 (no external)</h1>
+<ul>
+<pre>
+ntlm.authentication.sso.enabled
+kerberos.authentication.sso.enabled
+</pre>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: NTLM: challenge/response</h1>
+<ul>
+<center><img src="pica/ntlm_challenge.gif"/></center>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: NTLMv1, NTLMv2</h1>
+<ul>
+<li>v2: No man in the middle</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: NTLM dependency on HTTP keep alives</h1>
+<ul>
+
+<a href="https://issues.alfresco.com/jira/browse/ALF-6300">https://issues.alfresco.com/jira/browse/ALF-6300</a>
+
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: Active Directory</h1>
+Compare with Linux services:
+<ul>
+<li>ldap (openldap)</li>
+<li>kerberos (MIT, heimdal)</li>
+<li>dns (bind, powerdns)</li>
+<li>and....</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication: passthru</h1>
+<ul>
+<li>what is passthru?</li>
+<li>mount IPC$ by smb</li>
+</ul>
+</div>
+
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: ldap</h1>
+<ul>
+<li>openldap vs AD</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: ldap: authentication vs authorisation</h1>
+</div>
+
+<div class="slide">
+<h1>Authentication: ldap: authentication vs synchronisation</h1>
+</div>
+
+<div class="slide">
+<h1>Authentication: ldap: no cifs</h1>
+</div>
+
+<div class="slide">
+<h1>Authentication: ldap: chaining</h1>
+</div>
+
+<div class="slide">
+<h1>Authentication: ldap: debugging, network dumps</h1>
+</div>
+
+<div class="slide">
+<h1>Authentication: ldap: scripting</h1>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication: ldap: bind vs search</h1>
+<ul>
+<li>bind</li>
+<li>search if ldap.authentication.userNameFormat is blank</li>
+</ul>
+<div class="handout">
+
+ldap.authentication.userNameFormat
+   How to map the user id entered by the user to that passed through to LDAP. If set to the empty string (the default for the ldap subsystem), an LDAP query involving ldap.synchronization.personQuery and ldap.synchronization.userIdAttributeName will be performed to resolve the DN from the user ID dynamically. 
+</div>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>LDAP sync</h1>
+<ul>
+<a href="http://wiki.alfresco.com/wiki/The_Synchronization_Subsystem">http://wiki.alfresco.com/wiki/The_Synchronization_Subsystem</a>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>LDAP sync: full vs differential</h1>
+<ul>
+<li>timestamp</li>
+<li>NEVER a FULL at boot time (except 1st boot)</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>LDAP sync: unknown users</h1>
+<ul>
+<li>mini sync</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>LDAP sync: restrict</h1>
+<ul>
+<pre>
+synchronization.syncOnStartup=true
+synchronization.syncWhenMissingPeopleLogIn=true
+synchronization.autoCreatePeopleOnLogin=false
+</pre>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>LDAP sync: zones</h1>
+<ul>
+<li>deletion behaviour</li>
+<li><a href="http://wiki.alfresco.com/wiki/The_Synchronization_Subsystem#Deletion_Behavior">http://wiki.alfresco.com/wiki/The_Synchronization_Subsystem#Deletion_Behavior</a></li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>LDAP sync: trigger</h1>
+<ul>
+<a href="http://wiki.alfresco.com/wiki/The_Synchronization_Subsystem#Triggering_a_full_ldap_sync">http://wiki.alfresco.com/wiki/The_Synchronization_Subsystem#Triggering_a_full_ldap_sync</a>
+<br/>
+MBeans -> Alfresco -> Schedule -> *CronTrigger (e.g. MonitoredCronTrigger)-> syncTrigger ->excuteNow()
+
+
+</ul>
+</div>
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: external: CGI based / header based</h1>
+<ul>
+<li>external.authentication.proxyUserName</li>
+<li>external.authentication.proxyHeader (default X-Alfresco-Remote-User)</li>
+</ul>
+
+<a href="http://wiki.alfresco.com/wiki/Alfresco_Authentication_Subsystems#External">http://wiki.alfresco.com/wiki/Alfresco_Authentication_Subsystems#External</a>
+
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external wiring: Indirect</h1>
+<ul>
+<center><img width="60%" src="./pica/external_apache.png"/></center>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external wiring: Direct</h1>
+<ul>
+<center><img width="60%" src="./pica/external_direct.png"/></center>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Authentication: Proxying to debug</h1>
+e.g stunnel (SSL)
+</div>
+
+
+<div class="slide">
+<h1>Authentication: sniffing to debug</h1>
+<ul>
+<li>tcpdump</li>
+<li>tcpflow</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: log4j to debug</h1>
+<ul>
+<li><a href="https://issues.alfresco.com/jira/browse/ALF-12511">ALF-12511</a>
+Allow debugging of the authentication chain at a high level</li>
+
+
+<li><a href="https://issues.alfresco.com/jira/browse/ALF-15335">ALF-1533</a>
+'external' authentication subsystem debug information too scarce</li>
+
+<li>4.2: admin test console</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: External:</h1>
+<h2>Testing REMOTE_USER passing</h2>
+'tomcat/webapps/alfresco/test.jsp':
+
+<pre>
+getRemoteUser() is set to:
+&lt;% out.print (request.getRemoteUser()); %&gt;
+</pre>
+<a href="https://issues.alfresco.com/jira/browse/ALF-4230">https://issues.alfresco.com/jira/browse/ALF-4230</a>
+
+</div>
+
+
+
+<div class="slide">
+<h1>authentication: external: Share header-based </h1>
+<ul>
+<li>
+<a href="https://issues.alfresco.com/jira/browse/ALF-10763">https://issues.alfresco.com/jira/browse/ALF-10763</a>
+</li>
+<li>Available: 3.4.9, 4.0.2</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>authentication: external: CAS</h1>
+<ul>
+<li>CAS server</li>
+<li>CAS client</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>authentication: external: CAS picture</h1>
+
+<center><img width="60%" src="pica/basic_cas_single_signon_mechanism_diagram.png"/></center>
+</div>
+
+
+
+<div class="slide">
+<h1>authentication: external: CAS servers</h1>
+<ul>
+<li>jasig <a href="http://www.jasig.org/cas/download">http://www.jasig.org/cas/download</a></li>
+<li>rubycas <a href="http://code.google.com/p/rubycas-server/">http://code.google.com/p/rubycas-server</a></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>authentication: external: CAS clients</h1>
+<ul>
+<li>jasig</li>
+<li>yale</li>
+<li>mod_auth_cas</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>CAS: tut 1</h1>
+<pre>
+LoadModule auth_cas_module modules/mod_auth_cas.so
+
+CASCookiePath /var/cache/apache2/mod_auth_cas/
+CASLoginURL https://localhost:8443/cas-server-webapp-3.4.11/login
+CASValidateURL https://localhost:8443/cas-server-webapp-3.4.11/serviceValidate
+CASValidateServer Off
+CASDebug On
+</pre>
+
+</div>
+
+
+
+<div class="slide">
+<h1>CAS: tut 2</h1>
+<pre>
+&lt;VirtualHost cas2.foo:80>
+ProxyRequests Off
+ProxyPreserveHost On
+ProxyPass /alfresco ajp://localhost:8009/alfresco
+ProxyPassReverse /alfresco ajp://localhost:8009/alfresco
+ProxyPassReverseCookiePath /alfresco /alfresco
+
+ProxyPass /share ajp://localhost:8009/share
+ProxyPassReverse /share ajp://localhost:8009/share
+ProxyPassReverseCookiePath /share /share
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 3</h1>
+<pre>
+
+ &lt;Location /alfresco>
+ AuthType CAS
+ AuthName "CAS"
+ require valid-user
+ CASScope /alfresco
+ &lt;/Location>
+ &lt;Location /share>
+ AuthType CAS
+ AuthName "CAS"
+ require valid-user
+ CASScope /share
+ &lt;/Location>
+&lt;/VirtualHost>
+
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 4</h1>
+<pre>
+
+
+create the keystore:
+
+http://tomcat.apache.org/tomcat-6.0-doc/ssl-howto.html#Prepare_the_Certificate_Keystore
+
+
+madon@madona:~$ keytool -genkey -alias tomcat -keyalg RSA
+Enter keystore password:  
+Re-enter new password: 
+What is your first and last name?
+  [Unknown]:  localhost
+What is the name of your organizational unit?
+  [Unknown]:  
+What is the name of your organization?
+  [Unknown]:  
+What is the name of your City or Locality?
+  [Unknown]:  
+What is the name of your State or Province?
+  [Unknown]:  
+What is the two-letter country code for this unit?
+  [Unknown]:  
+Is CN=localhost, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown correct?
+  [no]:  yes
+
+Enter key password for &lt;tomcat>
+	(RETURN if same as keystore password):  
+Re-enter new password: 
+
+
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 5</h1>
+<pre>
+
+
+add the
+
+keystoreFile="/etc/keys/keystore1" keystorePass="mypass"
+
+to the ssl connector in tomcat server.xml
+
+    &lt;Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="150" scheme="https" secure="true"
+               keystoreFile="/etc/keys/keystore1" keystorePass="mypass"
+               clientAuth="false" sslProtocol="TLS" />
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 6</h1>
+<pre>
+
+3) in tomcat server.xml set tomcatAuthentication="false" in
+
+&lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" tomcatAuthentication="false"/>
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: client</h1>
+<pre>
+
+3) copy the cas war to Tomcat's webapps/ directory
+
+
+cp \
+/usr/local/cas-server-3.4.11/apache-tomcat-6.0.29/webapps/cas-server-webapp-3.4.11.war \
+/opt/alfresco347MyExt/tomcat/webapps
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS:  tut 7</h1>
+<pre>
+
+Check:
+
+https://localhost:8443/cas-server-webapp-3.4.11/login
+
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 8</h1>
+<pre>
+
+goto http://cas2.foo/alfresco
+
+
+FOR SHARE:
+external.authentication.proxyUserName=
+external.authentication.proxyHeader=X-Alfresco-Remote-User
+
+(direct wiring)
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 9</h1>
+<pre>
+
+http://wiki.alfresco.com/wiki/Alfresco_With_mod_auth_cas
+http://wiki.alfresco.com/wiki/Alfresco_Authentication_Subsystems#Alfresco_Share_SSO_using_NTLM
+http://wiki.alfresco.com/wiki/Alfresco_cas_with_yale_cas_client
+
+for 3.4 The SSO filters no longer need to be enabled in web.xml. No edits are required in that file. 
+
+
+cd /opt/alfresco347MyExt/tomcat/shared/classes/alfresco/web-extension
+cp share-config-custom.xml.sample share-config-custom.xml
+
+
+for 3.3, 3.4
+tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml
+   &lt;!-- 
+        SSO authentication config for Share
+        NOTE: change localhost:8080 below to appropriate alfresco server location if required
+   -->
+   &lt;config evaluator="string-compare" condition="Remote">
+      &lt;remote>
+         &lt;connector>
+            &lt;id>alfrescoCookie&lt;/id>
+            &lt;name>Alfresco Connector&lt;/name>
+            &lt;description>Connects to an Alfresco instance using cookie-based authentication&lt;/description>
+            &lt;class>org.springframework.extensions.webscripts.connector.AlfrescoConnector&lt;/class>
+         &lt;/connector>
+         
+         &lt;endpoint>
+            &lt;id>alfresco&lt;/id>
+            &lt;name>Alfresco - user access&lt;/name>
+            &lt;description>Access to Alfresco Repository WebScripts that require user authentication&lt;/description>
+            &lt;connector-id>alfrescoCookie&lt;/connector-id>
+            &lt;endpoint-url>http://localhost:8080/alfresco/wcs&lt;/endpoint-url>
+            &lt;identity>user&lt;/identity>
+            &lt;external-auth>true&lt;/external-auth>
+         &lt;/endpoint>
+      &lt;/remote>
+   &lt;/config>
+
+
+
+</pre>
+
+
+</div>
+
+<!-- =================================================================== -->
+<!-- =================================================================== -->
+<!-- =================================================================== -->
+<!-- =================================================================== -->
+<!-- =================================================================== -->
+<!-- =================================================================== -->
+<!-- =================================================================== -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============================= -->
+<!--          CAS        -->
+<!-- ============================= -->
+
+
+<div class="slide">
+<h1>authentication: external: Will speak about</h1>
+<ul>
+<li>integration</li>
+<li>external auth</li>
+<li>CAS</li>
+<li>mod_auth_cas CAS client</li>
+<li>Jasig CAS server</li>
+</ul>
+</div>
+
+
+
+
+
+<!-- ============================= -->
+<!--          auth layers          -->
+<!-- ============================= -->
+
+
+
+<div class="slide">
+<h1>Alfresco authentication support</h1>
+<ul>
+<li>subsystems</li>
+<li>external is particular</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: External: Aim: loose coupling</h1>
+<ul>
+<li>integration</li>
+<li>building blocks</li>
+<li>layers</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: External: Loose coupling: recommend</h1>
+<ul>
+<li>Apache AJP</li>
+<li>Any HTTP proxy could do BUT <a href="https://issues.alfresco.com/jira/browse/ALF-10763">https://issues.alfresco.com/jira/browse/ALF-10763</a> IN 4.X, 3.4.9</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: External: Loose coupling: less loose: AS capabilities</h1>
+<ul>
+<li>IBM WebSphere AS: LTPA (Lightweight Third-Party Authentication)</li>
+<li>Jboss <a href="http://docs.jboss.com/jbportal/v2.6.3/referenceGuide/html/sso.html">http://docs.jboss.com/jbportal/v2.6.3/referenceGuide/html/sso.html</a></li>
+<li>Tomcat: Jasig Java CAS client 3.1.12 supports container-based CAS authentication
+<a href="https://wiki.jasig.org/display/CASC/Tomcat+Container+Authentication">https://wiki.jasig.org/display/CASC/Tomcat+Container+Authentication</a>
+</li>
+</ul>
+
+<div class="handout">
+The Jasig Java CAS client 3.1.12 and later supports container-based CAS authentication and authorization support for the Tomcat servlet container.</div>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: External: Loose coupling: even lesser loose</h1>
+<ul>
+<li>web.xml &lt;filter-mapping></li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: external: the chain</h1>
+<ul>
+<li>authentication.chain=external1:external</li>
+</ul>
+</div>
+
+
+
+
+<div class="slide">
+<h1>Authentication: external: two modes</h1>
+<ul>
+<li>CGI REMOTE_USER based (servlet)</li>
+<li>header based</li>
+</ul>
+</div>
+
+
+
+
+
+<div class="slide">
+<h1>Authentication: layers: CGI</h1>
+<ul>
+<li>AJP</li>
+<li>getRemoteUser() method</li>
+<li>(cf getScheme() for SSL proxies)</li>
+</ul>
+</div>
+
+<!-- cf Thomas http://support.alfresco.com/ics/support/default.asp?deptID=15026&task=knowledge&questionID=453
+
+miguel sap
+https://issues.alfresco.com/jira/browse/ALF-13658
+
+ -->
+
+<div class="slide">
+<h1>Authentication: layers: HTTP header</h1>
+<ul>
+<li>appliance: no AJP</li>
+<li>see external subsystem (no Share header based)
+<pre>
+external.authentication.proxyHeader
+</pre></li>
+</ul>
+</div>
+
+
+
+
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+<!-- ===================================================================== -->
+
+
+
+<div class="slide">
+<h1>Authentication: external: CGI based / header based</h1>
+<ul>
+<li>external.authentication.proxyUserName</li>
+<li>external.authentication.proxyHeader (default X-Alfresco-Remote-User)</li>
+</ul>
+
+<a href="http://wiki.alfresco.com/wiki/Alfresco_Authentication_Subsystems#External">http://wiki.alfresco.com/wiki/Alfresco_Authentication_Subsystems#External</a>
+
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external: Share wiring</h1>
+<ul>
+<li>indirect</li>
+<li>direct</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Authentication: external: wiring: Indirect</h1>
+<ul>
+<center><img width="60%" src="./pica/external_apache.png"/></center>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external: wiring: Direct</h1>
+<ul>
+<center><img width="60%" src="./pica/external_direct.png"/></center>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external: wiring: Security</h1>
+<ul>
+<li>SSL client certificate</li>
+<li>lock your box (iptables firewall)</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external:</h1>
+<h2>Testing REMOTE_USER passing</h2>
+'tomcat/webapps/alfresco/test.jsp':
+
+<pre>
+getRemoteUser() is set to:
+&lt;% out.print (request.getRemoteUser()); %&gt;
+</pre>
+<a href="https://issues.alfresco.com/jira/browse/ALF-4230">https://issues.alfresco.com/jira/browse/ALF-4230</a>
+
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: external: Share header-based</h1>
+<ul>
+<li><b>GOOD news:</b> in 3.4.9 and 4.0.2:
+<a href="https://issues.alfresco.com/jira/browse/ALF-10763">https://issues.alfresco.com/jira/browse/ALF-10763</a>
+</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: external: CAS</h1>
+<ul>
+<li>CAS server</li>
+<li>CAS client</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external: CAS picture</h1>
+
+<center><img width="30%" src="pica/basic_cas_single_signon_mechanism_diagram.png"/></center>
+</div>
+
+
+
+<div class="slide">
+<h1>Authentication: external: CAS servers</h1>
+<ul>
+<li>jasig <a href="http://www.jasig.org/cas/download">http://www.jasig.org/cas/download</a></li>
+<li>rubycas <a href="http://code.google.com/p/rubycas-server/">http://code.google.com/p/rubycas-server</a></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Authentication: external: CAS clients</h1>
+<ul>
+<li>jasig</li>
+<li>yale</li>
+<li>mod_auth_cas</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>CAS: tut 1</h1>
+<pre>
+
+LoadModule auth_cas_module modules/mod_auth_cas.so
+
+CASCookiePath /var/cache/apache2/mod_auth_cas/
+CASLoginURL https://localhost:8443/cas-server-webapp-3.4.11/login
+CASValidateURL https://localhost:8443/cas-server-webapp-3.4.11/serviceValidate
+CASValidateServer Off
+CASDebug On
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 2</h1>
+<pre>
+&lt;VirtualHost cas2.foo:80>
+ProxyRequests Off
+ProxyPreserveHost On
+ProxyPass /alfresco ajp://localhost:8009/alfresco
+ProxyPassReverse /alfresco ajp://localhost:8009/alfresco
+ProxyPassReverseCookiePath /alfresco /alfresco
+
+ProxyPass /share ajp://localhost:8009/share
+ProxyPassReverse /share ajp://localhost:8009/share
+ProxyPassReverseCookiePath /share /share
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 3</h1>
+<pre>
+
+ &lt;Location /alfresco>
+ AuthType CAS
+ AuthName "CAS"
+ require valid-user
+ CASScope /alfresco
+ &lt;/Location>
+ &lt;Location /share>
+ AuthType CAS
+ AuthName "CAS"
+ require valid-user
+ CASScope /share
+ &lt;/Location>
+&lt;/VirtualHost>
+
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 4</h1>
+<pre>
+
+
+create the keystore:
+
+http://tomcat.apache.org/tomcat-6.0-doc/ssl-howto.html#Prepare_the_Certificate_Keystore
+
+
+madon@madona:~$ keytool -genkey -alias tomcat -keyalg RSA
+Enter keystore password:  
+Re-enter new password: 
+What is your first and last name?
+  [Unknown]:  localhost
+What is the name of your organizational unit?
+  [Unknown]:  
+What is the name of your organization?
+  [Unknown]:  
+What is the name of your City or Locality?
+  [Unknown]:  
+What is the name of your State or Province?
+  [Unknown]:  
+What is the two-letter country code for this unit?
+  [Unknown]:  
+Is CN=localhost, OU=Unknown, O=Unknown, L=Unknown, ST=Unknown, C=Unknown correct?
+  [no]:  yes
+
+Enter key password for &lt;tomcat> [mypass]
+	(RETURN if same as keystore password):  
+Re-enter new password: 
+
+
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 5</h1>
+<pre>
+
+
+add the
+
+keystoreFile="/etc/keys/keystore1" keystorePass="mypass"
+
+to the ssl connector in tomcat server.xml
+
+    &lt;Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="150" scheme="https" secure="true"
+               keystoreFile="/etc/keys/keystore1" keystorePass="mypass"
+               clientAuth="false" sslProtocol="TLS" />
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 6</h1>
+<pre>
+
+3) in tomcat server.xml set tomcatAuthentication="false" in
+
+&lt;Connector port="8009" protocol="AJP/1.3" redirectPort="8443" tomcatAuthentication="false"/>
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: client</h1>
+<pre>
+
+3) copy the cas war to Tomcat's webapps/ directory
+
+
+cp \
+/usr/local/cas-server-3.4.11/apache-tomcat-6.0.29/webapps/cas-server-webapp-3.4.11.war \
+/opt/alfresco347MyExt/tomcat/webapps
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS:  tut 7</h1>
+<pre>
+
+Check:
+
+https://localhost:8443/cas-server-webapp-3.4.11/login
+
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 8</h1>
+<pre>
+
+goto http://cas2.foo/alfresco
+
+
+FOR SHARE:
+external.authentication.proxyUserName=
+external.authentication.proxyHeader=X-Alfresco-Remote-User
+
+(direct wiring)
+
+
+</pre>
+
+
+</div>
+
+<div class="slide">
+<h1>CAS: tut 9</h1>
+<pre>
+
+http://wiki.alfresco.com/wiki/Alfresco_With_mod_auth_cas
+http://wiki.alfresco.com/wiki/Alfresco_Authentication_Subsystems#Alfresco_Share_SSO_using_NTLM
+http://wiki.alfresco.com/wiki/Alfresco_cas_with_yale_cas_client
+
+for 3.4 The SSO filters no longer need to be enabled in web.xml. No edits are required in that file. 
+
+
+cd /opt/alfresco347MyExt/tomcat/shared/classes/alfresco/web-extension
+cp share-config-custom.xml.sample share-config-custom.xml
+
+
+for 3.3, 3.4
+tomcat/shared/classes/alfresco/web-extension/share-config-custom.xml
+   &lt;!-- 
+        SSO authentication config for Share
+        NOTE: change localhost:8080 below to appropriate alfresco server location if required
+   -->
+   &lt;config evaluator="string-compare" condition="Remote">
+      &lt;remote>
+         &lt;connector>
+            &lt;id>alfrescoCookie&lt;/id>
+            &lt;name>Alfresco Connector&lt;/name>
+            &lt;description>Connects to an Alfresco instance using cookie-based authentication&lt;/description>
+            &lt;class>org.springframework.extensions.webscripts.connector.AlfrescoConnector&lt;/class>
+         &lt;/connector>
+         
+         &lt;endpoint>
+            &lt;id>alfresco&lt;/id>
+            &lt;name>Alfresco - user access&lt;/name>
+            &lt;description>Access to Alfresco Repository WebScripts that require user authentication&lt;/description>
+            &lt;connector-id>alfrescoCookie&lt;/connector-id>
+            &lt;endpoint-url>http://localhost:8080/alfresco/wcs&lt;/endpoint-url>
+            &lt;identity>user&lt;/identity>
+            &lt;external-auth>true&lt;/external-auth>
+         &lt;/endpoint>
+      &lt;/remote>
+   &lt;/config>
+
+
+
+</pre>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Filesystem:</h1>
+<ul>
+<li>local</li>
+<li>remote</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: local: formats</h1>
+<ul>
+<li>ext2, ext3, ext4</li>
+<li>ntfs</li>
+<li>btrfs</li>
+<li>virtual: FUSE, dokan</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: local: hard</h1>
+<ul>
+<li>local disk</li>
+<li>SAN</li>
+<li>iSCSI</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: remote</h1>
+<ul>
+<li>nfs</li>
+<li>cifs</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: remote: more</h1>
+<ul>
+<li>dav</li>
+<li>ftp</li>
+<li>imap</li>
+<li>smtp</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: remote: even more</h1>
+<ul>
+<li>FUSE</li>
+<li>googlefs, etc...</li>
+<li><em>apt-cache search fuse| grep system</em></li>
+<li>alfresco? authentication is a problem</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: security</h1>
+<ul>
+<li>NFSv3</li>
+<li>huge security hole: demo</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: CIFS</h1>
+<ul>
+<li></li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: CIFS: protocol</h1>
+<ul>
+<li>netbios 137, 138, 139</li>
+<li>native 445</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: CIFS: implementations</h1>
+<ul>
+<li>windows</li>
+<li>samba</li>
+<li>alfresco</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: CIFS: alfresco: history</h1>
+<ul>
+<li>JLAN/IBM/starlasoft</li>
+<li>G Spencer</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Filesystem: CIFS: alfresco: implementation</h1>
+<ul>
+<li>TWO</li>
+<li>netbios (JNI/DLL)</li>
+<li>java</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: CIFS: alfresco: implementation: JNI</h1>
+<ul>
+<li>host name based</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: CIFS: alfresco: implementation: Java</h1>
+<ul>
+<li>linux only possibility</li>
+<li>windows can but no QA</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Filesystem: CIFS: Windows: Protocol Competition</h1>
+<ul>
+<li>netbios/native</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: NFS</h1>
+<ul>
+<li>not secure</li>
+</ul>
+</div>
+
+
+<div class="slide">
+<h1>Filesystem: NFS: security</h1>
+<ul>
+<li>alfresco</li>
+<li>alf_data</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+<div class="slide">
+<h1>Filesystem:</h1>
+<ul>
+<li>CIFS</li>
+<li>FTP</li>
+<li>webdav</li>
+<li>NFS</li>
+<li>IMAP</li>
+<li>SMTP</li>
+<li>VTI</li>
+</ul>
+(cf Starlasoft)
+</div>
+
+
+
+<div class="slide">
+<h1>Filesystem: securing</h1>
+<ul>
+<li>(CIFS - keberos)</li>
+<li>FTPs</li>
+<li>webdav HTTPS</li>
+<li>(NFS)</li>
+<li>(IMAP) - stunnel</li>
+<li>SMTP TLS</li>
+<li>VTI HTTPS</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Filesystem: firewalls: permissions</h1>
+<ul>
+<li>root users</li>
+<li>Port redirect (iptables)</li>
+</ul>
+</div>
+
+<div class="slide">
+<h1>Filesystem: and firewalls: go through</h1>
+<ul>
+<li>DMZ</li>
+<li>+authentication</li>
+</ul>
+</div>
+
+
+
+<div class="slide">
+<h1>Filesystem: CIFS and windows</h1>
+<ul>
+<li>JNI</li>
+<li>ports</li>
+</ul>
+</div>
+
+
+
+
+
+
+<div class="slide">
+<h1>Filesystem: Protocol competition</h1>
+<ul>
+<li>native 445 faster</li>
+<li>but need netbios</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
